@@ -1,4 +1,5 @@
 <script lang="ts">
+	import LucideMapPin from 'lucide-svelte/icons/map-pin';
 	import { superForm } from 'sveltekit-superforms';
 	import * as Form from '$lib/components/ui/form';
 	import Select from '$lib/components/Select.svelte';
@@ -11,9 +12,17 @@
 </script>
 
 <form class="space-y-4" method="post" use:enhance>
-	<p class="text-lg">
-		If you refresh/SSR on this page with HMR enabled, the Select component breaks.
-	</p>
+	<p class="text-lg">If you refresh/SSR on this page with HMR enabled, the rendering breaks.</p>
+	<div class="flex items-center gap-2">
+		<LucideMapPin class="h-4 w-4" />
+		{#if $formData.role === 'editor'}
+			{$formData.name} (Editor)
+		{:else if $formData.role === 'admin'}
+			{$formData.name} (Admin)
+		{:else}
+			{$formData.name}
+		{/if}
+	</div>
 	<Form.Field {form} name="name">
 		<Form.Control let:attrs>
 			<Form.Label>Name</Form.Label>
